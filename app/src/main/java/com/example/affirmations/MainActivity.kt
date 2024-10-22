@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
@@ -19,11 +20,13 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
@@ -43,8 +46,8 @@ class MainActivity : ComponentActivity() {
             AffirmationsTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                    modifier = Modifier.fillMaxSize()
+                        .background(Color(0xFFBBDEFB))
                 ) {
                     AffirmationsApp()
                 }
@@ -62,7 +65,10 @@ fun AffirmationsApp(modifier: Modifier = Modifier) {
 
 @Composable
 fun AffirmationCard(affirmation: Affirmation, modifier: Modifier = Modifier) {
-    Card(modifier = modifier) {
+    Card(
+        modifier = modifier.background(Color(0xFFF8BBD0)), // Light Pink background for the outer area
+        colors = CardDefaults.cardColors(containerColor = Color(0xFFBBDEFB)) // Light Blue inside the card
+    ) {
         Column {
             Image(
                 painter = painterResource(affirmation.imageResourceId),
@@ -75,7 +81,8 @@ fun AffirmationCard(affirmation: Affirmation, modifier: Modifier = Modifier) {
             Text(
                 text = LocalContext.current.getString(affirmation.stringResourceId),
                 modifier = Modifier.padding(16.dp),
-                style = MaterialTheme.typography.headlineSmall
+                style = MaterialTheme.typography.headlineSmall,
+                color = Color.Black
             )
         }
     }
@@ -83,11 +90,12 @@ fun AffirmationCard(affirmation: Affirmation, modifier: Modifier = Modifier) {
 
 @Composable
 fun AffirmationList(affirmationList: List<Affirmation>, modifier: Modifier = Modifier) {
-    LazyColumn(modifier = modifier) {
+    LazyColumn(modifier = modifier.background(Color(0xFFE1F5FE))) {
         items(affirmationList) { affirmation ->
             AffirmationCard(
                 affirmation = affirmation,
                 modifier = Modifier.padding(8.dp)
+                    .background(Color(0xFFBBDEFB))
             )
         }
     }
